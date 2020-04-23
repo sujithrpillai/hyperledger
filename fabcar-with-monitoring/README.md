@@ -68,7 +68,8 @@ echo "export CORE_PEER_ADDRESS=localhost:7051" >>/root/.bashrc
 
 ### Customize the image and scripts
 The steps in this section are custom steps that you wont find in the hyperledger documentation. By default the hyperledger images has the operations metrics disabled. What we do here is to enable it in the image and expose the service in the docker configuration.
-### Create a new image,
+#### Create a new image,
+In this example, we are not using the TLS communication . So we are not setting any certificates and `https`. However, in a real application, you will have to set it.
 ```
 docker run --rm --entrypoint cat hyperledger/fabric-peer:latest /etc/hyperledger/fabric/core.yaml > core.yaml
 sed 's/provider: disabled/provider: prometheus/g' core.yaml > core.yaml.tmp
@@ -87,7 +88,7 @@ ADD ./orderer.yaml /etc/hyperledger/fabric/orderer.yaml
 EOF
 docker build . -t hyperledger/fabric-orderer:latest
 ```
-### Edit the default docker-compose files
+#### Edit the default docker-compose files
 To expose the metrics port, the docker-compose file used by the `network.sh` script need to be edited. This file can be located here:- `~/fabric-samples/test-network/docker/docker-compose-test-net.yaml`
 
 In this file add extra lines to expose the port for each of the services, 
