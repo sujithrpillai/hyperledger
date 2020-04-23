@@ -80,4 +80,42 @@ scrape_configs:
 ```
 Create a configmap with the above configuration file, 
 ```
+kubectl create configmap prometheus-config --from-file=./prometheus.yml -n monitoring
+```
+Create a file `prometheus-deployment.yaml` with the following content,  
+(A sample is available here: https://github.com/sujithrpillai/hyperledger/blob/151a3b9c6c52d8a02cbf538df4b62da34623091c/prometheus/prometheus-deployment.yaml)
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prometheus-deployment
+  namespace: monitoring
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: prometheus
+  template:
+    metadata:
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - name: prometheus-cont
+        image: prom/prometheus
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc/prometheus/prometheus.yml
+          subPath: prometheus.yml
+        ports:
+        - containerPort: 9090
+      volumes:
+      - name: config-volume
+        configMap:
+          name: prometheus-config
+      serviceAccountName: prometheus
+```
+Apply the configuration,
+```
+kubectl apply -f ./prometheus-deployment.yaml
 ```
