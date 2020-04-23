@@ -119,3 +119,23 @@ Apply the configuration,
 ```
 kubectl apply -f ./prometheus-deployment.yaml
 ```
+Create a file `prometheus-service.yaml` with the following content,  
+(A sample is available here: https://github.com/sujithrpillai/hyperledger/blob/151a3b9c6c52d8a02cbf538df4b62da34623091c/prometheus/prometheus-service.yaml)
+```
+kind: Service
+apiVersion: v1
+metadata:
+  name: prometheus-service
+  namespace: monitoring
+spec:
+  selector:
+    app: prometheus
+  ports:
+  - name: promui
+    nodePort: 30900
+    protocol: TCP
+    port: 9090
+    targetPort: 9090
+  type: NodePort
+```
+Now the prometheus application is available on port 30900 of the kubernetes worker node.
