@@ -77,6 +77,18 @@ scrape_configs:
 - job_name: 'Kube-state-metrics'
   static_configs:
     - targets: ['kube-state-metrics.kube-system.svc:8080']
+# Scraping Orderer Metrics (Replace the Target Hostname and Port according to the environment)
+- job_name: 'Orderer'
+  static_configs:
+    - targets: ['hyperledger:9444']
+# Scraping Org1 Peer Metrics (Replace the Target Hostname and Port according to the environment)
+- job_name: 'Peer-Org1'
+  static_configs:
+    - targets: ['hyperledger:9445']
+# Scraping Org2 Peer Metrics (Replace the Target Hostname and Port according to the environment)
+- job_name: 'Peer-Org2'
+  static_configs:
+    - targets: ['hyperledger:9446']
 ```
 Create a configmap with the above configuration file, 
 ```
