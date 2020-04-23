@@ -4,7 +4,7 @@ In this code sample, we will setup a single node Hyperledger Fabcar sample appli
 For more information on Hyperledger v2.1 refer to the link https://hyperledger-fabric.readthedocs.io/en/release-2.1/whatis.html
 
 ## Setup Hyper ledger Fabric with Fabcar sample
-Set up an Ubuntu 18.04 server with minimal install configuration
+Set up an Ubuntu 18.04 server with minimal install configuration. All the code example assumes here that you are installing everything as `root` user and everything under the root home directory `/root`
 ### Install Pre-requisites
 The detailed information about the pre-requisites can be referred at https://hyperledger-fabric.readthedocs.io/en/release-2.1/prereqs.html
 #### Install SSH, Curl, Docker & Docker Compose
