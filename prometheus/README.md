@@ -7,7 +7,7 @@ The `kube-state-metrics` is configured on the cluster, if kubernetes monitoring 
 A namespace named `monitoring` is available. (The configurations below uses that namespace. If it need to be deployed in any other  namespace, the configurations given below need to be modified.)
 ### Creating necessary access
 Create a file `clusterRole.yaml` with the following content,   
-(A sample is available here : https://github.com/sujithrpillai/hyperledger/blob/master/prometheus/clusterRole.yaml)
+(A sample is available [here](clusterRole.yaml))
 ```
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -34,7 +34,7 @@ Apply the configuration,
 kubectl apply -f ./clusterRole.yaml
 ```
 Create a file `serviceAccount.yaml` with the  following content,   
-(A sample is available here: https://github.com/sujithrpillai/hyperledger/blob/master/prometheus/serviceAccount.yaml)
+(A sample is available [here](serviceAccount.yaml))
 ```
 apiVersion: v1
 kind: ServiceAccount
@@ -47,7 +47,7 @@ Apply the configuration,
 kubectl apply -f ./serviceAccount.yaml
 ```
 Create a file `clusterRoleBinding.yaml` with the following content,  
-(A sample is available here: https://github.com/sujithrpillai/hyperledger/blob/master/prometheus/clusterRoleBinding.yaml)
+(A sample is available [here](clusterRoleBinding.yaml))
 ```
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -64,7 +64,7 @@ subjects:
   namespace: monitoring
 ```
 Create the prometheus configuration file `prometheus.yml` with the following content,  
-(A sample is available here: https://github.com/sujithrpillai/hyperledger/blob/master/prometheus/prometheus.yml)
+(A sample is available [here](prometheus.yml))
 ```
 global:
   scrape_interval: 15s
@@ -83,7 +83,7 @@ Create a configmap with the above configuration file,
 kubectl create configmap prometheus-config --from-file=./prometheus.yml -n monitoring
 ```
 Create a file `prometheus-deployment.yaml` with the following content,  
-(A sample is available here: https://github.com/sujithrpillai/hyperledger/blob/151a3b9c6c52d8a02cbf538df4b62da34623091c/prometheus/prometheus-deployment.yaml)
+(A sample is available [here](prometheus-deployment.yaml))
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -120,7 +120,7 @@ Apply the configuration,
 kubectl apply -f ./prometheus-deployment.yaml
 ```
 Create a file `prometheus-service.yaml` with the following content,  
-(A sample is available here: https://github.com/sujithrpillai/hyperledger/blob/151a3b9c6c52d8a02cbf538df4b62da34623091c/prometheus/prometheus-service.yaml)
+(A sample is available [here](prometheus-service.yaml))
 ```
 kind: Service
 apiVersion: v1
@@ -139,3 +139,12 @@ spec:
   type: NodePort
 ```
 Now the prometheus application is available on port 30900 of the kubernetes worker node.
+
+If you make any changes to the configuration files, re-deploy the application with the help of following commands,  
+(These commands are available [here](runPrometheus.sh)
+```
+kubectl delete configmap prometheus-config -n monitoring
+kubectl delete -f prometheus-deployment.yaml 
+kubectl create configmap prometheus-config --from-file=./prometheus.yml -n monitoring
+kubectl create -f prometheus-deployment.yaml 
+```

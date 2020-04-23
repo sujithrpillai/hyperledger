@@ -146,3 +146,8 @@ peer chaincode invoke  \
      --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt \
      -c '{"function":"changeCarOwner","Args":["CAR9","Dave"]}'
 ```
+You can follow the procedure for installing and configuring Prometheus as explained [here](../prometheus/README.md)
+
+Once the prometheus is configured, follow the procedure [here](../grafana/README.md) to configure the grafana dashboard for blockchain.
+
+Happy Coding...
